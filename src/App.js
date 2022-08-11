@@ -76,6 +76,8 @@ function App() {
   };
 
   return (
+    //react solo acepta un componente, por lo cual
+    //renderizamos una etiqueta invisible --> React.fragment
     <React.Fragment>
       <TodoCounter
         total={totalTodos}
@@ -88,6 +90,8 @@ function App() {
       <TodoList>
         {searchedTodos.map(todo => (
           <TodoItem
+          //al renderizar elementos de una lista,a rray, tenemso que usar
+          // la propiedad key a nuestros componentes para que react los pueda identificar
            key={todo.text}
            text={todo.text}
            completed={todo.completed}
