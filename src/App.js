@@ -4,6 +4,7 @@ import { TodoSearch } from "./TodoSearch";
 import { TodoList } from "./TodoList";
 import { CreateTodoButton} from './CreateTodoButton'
 import { TodoItem } from "./TodoItem";
+import { ProgressBar } from "./ProgressBar";
 // import './App.css';
 
 // const defaultTodos = [
@@ -80,6 +81,10 @@ function App() {
     //renderizamos una etiqueta invisible --> React.fragment
     <React.Fragment>
       <TodoCounter
+        total={totalTodos}
+        completed={completedTodos}
+      />
+      <ProgressBar
         total={totalTodos}
         completed={completedTodos}
       />
