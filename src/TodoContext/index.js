@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
-const TodoContex = React.createContext();
+const TodoContext = React.createContext();
 
 function TodoProvider(props) {
 
@@ -59,7 +59,7 @@ function TodoProvider(props) {
     // }, []);  
 
     return(
-        <TodoContex.Provider value={{
+        <TodoContext.Provider value={{
             error,
             loading,
             totalTodos,
@@ -71,8 +71,8 @@ function TodoProvider(props) {
             deleteTodo,
         }}>
             {props.children}
-        </TodoContex.Provider>
+        </TodoContext.Provider>
     );
 }
 
-export { TodoContex, TodoProvider };
+export { TodoContext, TodoProvider };
