@@ -14,21 +14,38 @@ import { ProgressBar } from "./ProgressBar";
 //   {text:'Llamar PD Las Vegas', completed: false},
 // ]
 
+//creando nuestro propio hooks de local storage
+function useLocalStorage (itemName, initialValue) {
+  
+  const localStorageItem = localStorage.getItem('itemName');
+  
+  let parsedItem;
+  if(!localStorageItem) {
+    localStorage.setItem('itemName', JSON.stringify(initialValue));
+    parsedItem = initialValue;
+  } else {
+    parsedItem= JSON.parse(localStorageItem);
+  }
+  
+  const [item, setItem] = React.useState(parsedItem);
 
+  const saveItem = (newItem) =>  {
+    const stringifiedItem = JSON.stringify(newItem);
+    // cuando recibe un nombre y valor, lo almacena o actualiza si ya existe.
+    localStorage.setItem('itemName', stringifiedItem);
+    setItem(newItem);
+  };
+
+  return [item, saveItem];
+}
 
 function App() {
 
-  const localStorageTodos = localStorage.getItem('Todos_v1');
   
-  let parsedTodos;
-  if(!localStorageTodos) {
-    localStorage.setItem('Todos_v1', JSON.stringify([]));
-    parsedTodos = [];
-  } else {
-    parsedTodos= JSON.parse(localStorageTodos);
-  }
-
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const [todos, saveTodos] = useLocalStorage('Todos_v1', []);
+  //los estados se maneja como array, en posicion 0 el estado actual
+  //en poscicion 1 una funcion para cambiar ese estado 
+  
 
   const [searchValue, setSearchValue] = React.useState('');
 
@@ -48,15 +65,11 @@ function App() {
       // busca las coincidencias
       return todoText.includes(searchText);
     });
-    // intento de operador ternario
-    // searchedTodos = !searchValue.length ? todos : todos.filter(todo => (todo.text.toLowerCase().includes(searchValue.toLowerCase())));
+    // Operador ternario
+    // searchedTodos = !searchValue.length >= 1 ? todos : todos.filter(todo => (todo.text.toLowerCase().includes(searchValue.toLowerCase())));
   }
 
-  const saveTodos = (newTodos) =>  {
-    const stringifiedTodos = JSON.stringify(newTodos);
-    localStorage.setItem('Todos_v1', stringifiedTodos);
-    setTodos(newTodos);
-  };
+  
 
   const completeTodo = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text === text);
