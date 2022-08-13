@@ -6,9 +6,10 @@ import { TodoList } from "../TodoList";
 import { CreateTodoButton} from '../CreateTodoButton'
 import { TodoItem } from "../TodoItem";
 import { ProgressBar } from "../ProgressBar";
+import { Modal } from "../Modal";
 
 function AppUI() {
-    const {error, loading, searchedTodos, completeTodo, deleteTodo} = React.useContext(TodoContext)
+    const {error, loading, searchedTodos, completeTodo, deleteTodo, openModal, setOpenModal} = React.useContext(TodoContext)
     return (
     //react solo acepta un componente, por lo cual
     //renderizamos una etiqueta invisible --> React.fragment
@@ -33,10 +34,19 @@ function AppUI() {
                 onDelete={() => deleteTodo(todo.text)}/>
             ))}
         </TodoList>
+
+            {openModal && (
+                <Modal>
+                    <p>{searchedTodos[0]?.text}</p>
+                </Modal>
+            )}
         
-        <CreateTodoButton/>
+        
+        <CreateTodoButton
+            setOpenModal={setOpenModal}
+        />
     </React.Fragment>
     );
 }
 
-export { AppUI }
+export { AppUI };

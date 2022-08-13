@@ -9,9 +9,9 @@ function TodoProvider(props) {
     //los estados se maneja como array, en posicion 0 el estado actual
     //en poscicion 1 una funcion para cambiar ese estado 
     
-  
     const [searchValue, setSearchValue] = React.useState('');
-  
+    const [openModal, setOpenModal] = React.useState(false);
+
     const completedTodos = todos.filter (todo => todo.completed).length;
   
     const totalTodos = todos.length;
@@ -69,6 +69,8 @@ function TodoProvider(props) {
             searchedTodos,
             completeTodo,
             deleteTodo,
+            openModal,
+            setOpenModal,
         }}>
             {props.children}
         </TodoContext.Provider>
